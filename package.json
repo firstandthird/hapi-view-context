@@ -1,0 +1,24 @@
+{
+  "name": "hapi-view-context",
+  "version": "0.0.1",
+  "description": "Loads data into hapi views",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hapi",
+    "views"
+  ],
+  "author": "First+Third",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "handlebars": "^4.0.3",
+    "hapi": "^10.1.0",
+    "hoek": "^2.16.3",
+    "vision": "^3.0.0"
+  }
+}
