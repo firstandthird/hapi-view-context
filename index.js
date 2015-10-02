@@ -1,23 +1,26 @@
 var _ = require('lodash');
 
-exports.register = function(server, initial, next) {
-  var self = this;
+exports.register = function(server, options, next) {
 
-  this.addContext = function(request, key, data) {
+  options = options || {};
+
+  var addContext = function(request, key, data) {
     var response = request.response;
 
-    if (response.variety !== 'view') return;
+    if (response.variety !== 'view') {
+      return;
+    }
 
     response.source.context = _.set(response.source.context || {}, key, data);
 
     return response.source.context;
   };
 
-  server.expose('addContext', this.addContext);
+  server.expose('addContext', addContext);
 
   server.ext('onPreResponse', function(request, reply) {
-    _.forIn(initial, function(value, key) {
-      self.addContext(request, key, value);
+    _.forIn(options.context, function(value, key) {
+      addContext(request, key, value);
     });
 
     reply.continue();
