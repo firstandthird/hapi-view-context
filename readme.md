@@ -23,7 +23,7 @@ Options are used to set the default context. The object key will match the conte
 ```js
 server.ext('onPreResponse', function(request, reply) {
 
-  server.plugins['hapi-view-context'].addContext('amazingData', 'More data');
+  server.plugins['hapi-view-context'].addContext(request, 'amazingData', 'More data');
 
 });
 ```
