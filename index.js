@@ -11,7 +11,17 @@ exports.register = function(server, options, next) {
       return;
     }
 
-    response.source.context = _.set(response.source.context || {}, key, data);
+    var d = {};
+
+    if (typeof key === 'string') {
+      d[key] = data;
+    } else {
+      d = key;
+    }
+
+    _.forIn(d, function(value, key) {
+      response.source.context = _.set(response.source.context || {}, key, value);
+    });
 
     return response.source.context;
   };
@@ -19,9 +29,7 @@ exports.register = function(server, options, next) {
   server.expose('addContext', addContext);
 
   server.ext('onPreResponse', function(request, reply) {
-    _.forIn(options.context, function(value, key) {
-      addContext(request, key, value);
-    });
+    addContext(request, options);
 
     reply.continue();
   });
