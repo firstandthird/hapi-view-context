@@ -21,8 +21,11 @@ server.register(require('vision'), function (err) {
 server.register({
   register: require('../'),
   options: {
-    'something': 'Something',
-    'nested.something': 'Nested'
+    enableDebug: true,
+    context: {
+      'something': 'Something',
+      'nested.something': 'Nested'
+    }
   }
 }, function (err) {
   if (err) {
