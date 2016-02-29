@@ -1,7 +1,6 @@
 var _ = require('lodash');
 
 exports.register = function(server, options, next) {
-
   options = options || {};
 
   var addContext = function(request, key, data) {
@@ -29,7 +28,20 @@ exports.register = function(server, options, next) {
   server.expose('addContext', addContext);
 
   server.ext('onPreResponse', function(request, reply) {
-    addContext(request, options);
+    addContext(request, options.context);
+
+    if (options.enableDebug && typeof request.query.context === 'string') {
+      var selected = _.get(request.response.source.context, request.query.context);
+      var context = request.response.source.context;
+
+      if (selected !== undefined) {
+        var out = {};
+        out[request.query.context] = selected;
+        context = out;
+      }
+
+      return reply(context);
+    }
 
     reply.continue();
   });
