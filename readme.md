@@ -27,6 +27,8 @@ server.ext('onPreResponse', function(request, reply) {
   server.plugins['hapi-view-context'].addContext(request, {
     somethingElse: 'test'
   });
+  
+  reply.continue()
 
 });
 ```
