@@ -27,24 +27,24 @@ exports.register = function(server, options, next) {
 
   server.expose('addContext', addContext);
 
-  server.ext('onPreResponse', function(request, reply) {
-    addContext(request, options.context);
+  if (options.context) {
+    server.ext('onPreResponse', function(request, reply) {
+      addContext(request, options.context);
+      reply.continue();
+    });
+  }
 
-    if (options.enableDebug && typeof request.query.context === 'string') {
-      var selected = _.get(request.response.source.context, request.query.context);
-      var context = request.response.source.context;
-
-      if (selected !== undefined) {
-        var out = {};
-        out[request.query.context] = selected;
-        context = out;
+  if (options.enableDebug) {
+    server.on('tail', function(request) {
+      if (request.query.context && request.response.source && request.response.source.context) {
+        server.log(['hapi-view-context', 'debug'], {
+          url: request.url.path,
+          query: request.query,
+          context: request.response.source.context
+        });
       }
-
-      return reply(context);
-    }
-
-    reply.continue();
-  });
+    });
+  }
 
   next();
 };
