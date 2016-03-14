@@ -28,8 +28,9 @@ exports.register = function(server, options, next) {
   server.expose('addContext', addContext);
 
   if (options.context) {
-    server.ext('onPreResponse', function(request, reply) {
+    server.ext('onPostHandler', function(request, reply) {
       addContext(request, options.context);
+
       reply.continue();
     });
   }
