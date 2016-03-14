@@ -21,13 +21,13 @@ server.register({
 Options are used to set the default context. The object key will match the context path.
 
 ```js
-server.ext('onPreResponse', function(request, reply) {
+server.ext('onPostHandler', function(request, reply) {
 
   server.plugins['hapi-view-context'].addContext(request, 'amazingData', 'More data');
   server.plugins['hapi-view-context'].addContext(request, {
     somethingElse: 'test'
   });
-  
+
   reply.continue()
 
 });
