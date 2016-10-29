@@ -6,8 +6,7 @@ server.connection({ port: 3000 });
 
 server.register(require('vision'), (err) => {
   if (err) {
-    console.error('Failed to load a plugin:', err);
-    return;
+    throw err;
   }
   server.views({
     engines: {
@@ -29,8 +28,7 @@ server.register({
   }
 }, (err) => {
   if (err) {
-    console.error('Failed to load a plugin:', err);
-    return;
+    throw err;
   }
 
   server.route({

@@ -3,7 +3,6 @@ const _ = require('lodash');
 
 exports.register = function(server, options, next) {
   options = options || {};
-  let called = 0;
   const addViewContextHandler = (fn) => {
     server.ext('onPostHandler', (request, reply) => {
       const response = request.response;
