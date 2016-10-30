@@ -1,4 +1,5 @@
-# hapi-view-context
+# hapi-view-context [![Build Status](https://travis-ci.org/firstandthird/hapi-view-context.svg?branch=master)](https://travis-ci.org/firstandthird/hapi-view-context)
+
 
 Helpers to automate the task of loading data into view contexts.
 
