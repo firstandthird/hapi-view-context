@@ -1,7 +1,7 @@
 # hapi-view-context [![Build Status](https://travis-ci.org/firstandthird/hapi-view-context.svg?branch=master)](https://travis-ci.org/firstandthird/hapi-view-context)
 
 
-Helpers to automate the task of loading data into view contexts.
+Helpers to automate the task of loading data into view rendering contexts.  Keeps your route handlers clean!
 
 ### Installation
 
@@ -10,11 +10,35 @@ Helpers to automate the task of loading data into view contexts.
 ### Usage
 
 hapi-view-context lets you set up data in the current view rendering context in one of four ways:
-1. pass static global-level default key:value pairs (in the plugin options _context_ field) that will be added to all contexts
-2. pass a global-level context-handling function or server method (in the plugin options _contextHandler_ field), that will be invoked whenever 'onPostHandler' is called
-3. set a global-level context-handling function with _server.setViewContext_, the context-handler will then be invoked whenever 'onPostHandler' is called
+1. pass static global-level default key:value pairs (in the plugin options _context_ field) that will be added to all contexts:
+```js
+{
+  context: {
+    siteVersion: '2.4.3',
+    copyright: 'Copyright (c) 2016 by You'
+  }
+}
+```
+2. pass a global-level context-handling function or server method (in the plugin options _contextHandler_ field), that will be invoked whenever 'onPostHandler' is called:
+```js
+{
+  contextHandler: (context, request) => {
+    context.id = request.id;
+    return context;
+  }
+}
+```
+3. set a global-level context-handling function with _server.setViewContext_, the context-handler will then be invoked whenever 'onPostHandler' is called:
+```js
+server.setViewContext( (context, request) => {
+  context.id = request.id;
+  return context;
+});
+```
 4. set request-level contexts inside route handlers and in response to request events with _addContext_.
-
+```js
+server.addContext(request, 'id', request.id);
+```
 ## Example:
 
 ```js

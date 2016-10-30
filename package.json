@@ -22,7 +22,7 @@
     "eslint-config-firstandthird": "^3.0.2",
     "eslint-plugin-import": "^1.14.0",
     "handlebars": "^4.0.3",
-    "hapi": "^10.5.0",
+    "hapi": "^15.2.0",
     "hoek": "^2.16.3",
     "lab": "^11.1.0",
     "vision": "^3.0.0"
