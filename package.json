@@ -4,7 +4,8 @@
   "description": "Loads data into hapi views",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "lab",
+    "lint": "eslint ."
   },
   "keywords": [
     "hapi",
@@ -16,9 +17,14 @@
     "lodash": "^3.10.1"
   },
   "devDependencies": {
+    "code": "^4.0.0",
+    "eslint": "^3.4.0",
+    "eslint-config-firstandthird": "^3.0.2",
+    "eslint-plugin-import": "^1.14.0",
     "handlebars": "^4.0.3",
-    "hapi": "^10.1.0",
+    "hapi": "^15.2.0",
     "hoek": "^2.16.3",
+    "lab": "^11.1.0",
     "vision": "^3.0.0"
   }
 }

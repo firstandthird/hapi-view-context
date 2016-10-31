@@ -1,14 +1,13 @@
-var Hapi = require('hapi');
+'use strict';
+const Hapi = require('hapi');
 
-var server = new Hapi.Server();
+const server = new Hapi.Server();
 server.connection({ port: 3000 });
 
-server.register(require('vision'), function (err) {
+server.register(require('vision'), (err) => {
   if (err) {
-    console.error('Failed to load a plugin:', err);
-    return;
+    throw err;
   }
-
   server.views({
     engines: {
       html: require('handlebars')
@@ -23,25 +22,24 @@ server.register({
   options: {
     enableDebug: true,
     context: {
-      'something': 'Something',
+      something: 'Something',
       'nested.something': 'Nested'
     }
   }
-}, function (err) {
+}, (err) => {
   if (err) {
-    console.error('Failed to load a plugin:', err);
-    return;
+    throw err;
   }
 
   server.route({
     method: 'GET',
     path: '/',
-    handler: function (request, reply) {
+    handler: (request, reply) => {
       reply.view('example');
     }
   });
 
-  server.start(function() {
+  server.start(() => {
     console.log('Server running at:', server.info.uri);
   });
 });
