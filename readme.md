@@ -89,16 +89,11 @@ We can add to the context for a specific request as well:
 
 ```js
 let calledOnce = false;
-server.route({
-  path: '/',
-  method: 'POST',
-  handler: (request, reply) => {
-    if (!calledOnce) {
-      calledOnce = true;
-      // addContext will only add to the context for the current request:
-      server.plugins['hapi-view-context'].addContext(request, { someVariable: 'a totally different value' });
-    }
-    reply.view('myView');
+server.ext('onPostHandler', (request, reply) => {
+  if (!calledOnce) {
+    calledOnce = true;
+    // addContext will only add to the context for the current request:
+    server.plugins['hapi-view-context'].addContext(request, { someVariable: 'a totally different value' });
   }
 });
 ```
@@ -108,7 +103,7 @@ Posting to '/' the first time will now return:
 <h1> a totally different value, Another value, a value from the context method, a value from setViewContext.</h1>
 ```
 
-But subsequent calls to this route will not have the context that was added to the previous request:
+But subsequent calls will not have the context that was added to the previous request:
 ```html
 <h1> Some Value, Another value, a value from the context method, a value from setViewContext.</h1>
 ```
