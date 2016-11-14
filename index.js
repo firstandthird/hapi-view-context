@@ -37,14 +37,9 @@ exports.register = function(server, options, next) {
   server.ext('onPostHandler', defaultContextHandler);
 
   // allow others to add to this request's context:
-  server.expose('addContext', (request, ...context) => {
+  server.expose('addContext', (request, obj) => {
     let newContext = {};
-    // context is either an object or a key: value pair
-    if (context.length === 1 && typeof context[0] === 'object') {
-      newContext = _.defaults(context[0], options.context);
-    } else if (context.length === 2) {
-      newContext[context[0]] = context[1];
-    }
+    newContext = _.defaults(obj, options.thing);
     if (!request.plugins) {
       request.plugins = {};
     }
