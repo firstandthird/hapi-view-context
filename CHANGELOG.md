@@ -1,4 +1,12 @@
 
+3.0.0 / 2016-11-14
+==================
+
+  * addContext simplified to always take object input
+  * update readme, updated to latest hapi dev
+  * add travis badge to readme
+  * es6, eslint, tests, functionality
+
 2.0.0 / 2016-05-23
 ==================
 
