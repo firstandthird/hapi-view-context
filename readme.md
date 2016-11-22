@@ -95,6 +95,7 @@ server.ext('onPostHandler', (request, reply) => {
     // addContext will only add to the context for the current request:
     server.plugins['hapi-view-context'].addContext(request, { someVariable: 'a totally different value' });
   }
+  reply.continue();
 });
 ```
 
