@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "code": "^4.0.0",
-    "eslint": "^3.9.1",
+    "eslint": "^3.14.0",
     "eslint-config-firstandthird": "^3.0.2",
     "eslint-plugin-import": "^2.1.0",
     "handlebars": "^4.0.3",
