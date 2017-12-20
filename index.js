@@ -1,12 +1,12 @@
 'use strict';
 const _ = require('lodash');
 
-exports.register = function(server, options, next) {
+const register = async function(server, options) {
   options = options || {};
-  const defaultContextHandler = (request, reply) => {
+  const defaultContextHandler = (request, h) => {
     // ignore if this isn't rendering a view:
     if (request.response.variety !== 'view') {
-      return reply.continue();
+      return h.continue;
     }
     const response = request.response;
     // make sure the view context is initialized:
@@ -30,7 +30,7 @@ exports.register = function(server, options, next) {
       response.source.context = _.defaults(response.source.context, method(response.source.context || {}, request));
     }
     // response.source.context should be set up and ready to go now!
-    reply.continue();
+    return h.continue;
   };
 
   // register one handler that handles building the context for each request:
@@ -54,17 +54,17 @@ exports.register = function(server, options, next) {
 
   // lets you add additional viewContextHandlers:
   server.expose('setViewContext', (fn) => {
-    server.ext('onPostHandler', (request, reply) => {
+    server.ext('onPostHandler', (request, h) => {
       const response = request.response;
       if (response.variety === 'view') {
         response.source.context = fn(response.source.context || {}, request);
       }
-      reply.continue();
+      return h.continue;
     });
   });
 
   if (options.enableDebug) {
-    server.on('tail', (request) => {
+    server.events.on('response', (request) => {
       if (request.query.context && request.response.source && request.response.source.context) {
         server.log(['hapi-view-context', 'debug'], {
           url: request.url.path,
@@ -74,9 +74,11 @@ exports.register = function(server, options, next) {
       }
     });
   }
-  next();
 };
 
-exports.register.attributes = {
+exports.plugin = {
+  name: 'hapi-view-context',
+  register,
+  once: true,
   pkg: require('./package.json')
 };
