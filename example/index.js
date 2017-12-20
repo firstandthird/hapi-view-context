@@ -1,13 +1,10 @@
 'use strict';
 const Hapi = require('hapi');
 
-const server = new Hapi.Server();
-server.connection({ port: 3000 });
+const f = async() => {
+  const server = new Hapi.Server({ port: 3000 });
 
-server.register(require('vision'), (err) => {
-  if (err) {
-    throw err;
-  }
+  await server.register(require('vision'));
   server.views({
     engines: {
       html: require('handlebars')
@@ -15,31 +12,26 @@ server.register(require('vision'), (err) => {
     relativeTo: __dirname,
     path: 'templates'
   });
-});
 
-server.register({
-  register: require('../'),
-  options: {
-    enableDebug: true,
-    context: {
-      something: 'Something',
-      'nested.something': 'Nested'
+  await server.register({
+    plugin: require('../'),
+    options: {
+      enableDebug: true,
+      context: {
+        something: 'Something',
+        'nested.something': 'Nested'
+      }
     }
-  }
-}, (err) => {
-  if (err) {
-    throw err;
-  }
+  });
 
   server.route({
     method: 'GET',
     path: '/',
-    handler: (request, reply) => {
-      reply.view('example');
-    }
+    handler: (request, h) => h.view('example')
   });
 
-  server.start(() => {
-    console.log('Server running at:', server.info.uri);
-  });
-});
+  await server.start();
+  console.log('Server running at:', server.info.uri);
+};
+
+f();
