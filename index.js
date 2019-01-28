@@ -67,7 +67,7 @@ const register = async function(server, options) {
     server.events.on('response', (request) => {
       if (request.query.context && request.response.source && request.response.source.context) {
         server.log(['hapi-view-context', 'debug'], {
-          url: request.url.path,
+          url: request.path,
           query: request.query,
           context: request.response.source.context
         });
