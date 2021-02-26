@@ -53,7 +53,7 @@ server.plugins['hapi-view-context'].setViewContext( (context, request) => {
 
 4. set request-level contexts inside route handlers and in response to request events with _addContext_.
 ```js
-server.plugins['hapi-view-context]].addContext(request, { id: request.id });
+server.plugins['hapi-view-context].addContext(request, { id: request.id });
 ```
 
 ## Example:
@@ -157,4 +157,4 @@ But subsequent calls will not have the context that was added to the previous re
 
 - __enableDebug__
 
-  Will log when context is loader
+  Will log debug info whenever a context is loaded
